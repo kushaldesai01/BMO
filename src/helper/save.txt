@@ -1,0 +1,18 @@
+// import React from "react";
+// import { useRoutes } from "react-router-dom";
+// import { Login } from "../views/webPages/Auth/Login";
+// import { Signup } from "../views/webPages/Auth/Signup";
+
+// export const Router: React.FC = () => {
+//   return useRoutes(
+//     [
+//       {
+//         path: "/",
+//         children: [
+//           { path: "/", element: <Login /> },
+//           { path: "/signup", element: <Signup /> },
+//         ]
+//       }
+//     ]
+//   )
+// }
