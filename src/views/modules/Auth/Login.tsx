@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import { Modal, Input, Button, Form } from "antd";
 import { HomeModalContext } from "../../../context/HomeContext";
+import { login } from "../../../apis/Auth";
+import { useNavigate } from "react-router-dom";
+import { Notification } from "../../../components/Notification";
 
 export const Login: React.FC = () => {
 
@@ -9,10 +12,19 @@ export const Login: React.FC = () => {
     password?: string;
   };
 
+  const navigate = useNavigate();
   const [loginModal, setLoginModal] = useContext(HomeModalContext);
   
   const onFinish = (values: FieldType) => {
-    console.log(values);
+    login(values)
+    .then((res: any) => {
+      if(res.success === true){
+        localStorage.setItem("token", res?.data);
+        navigate('/dashboard');
+        Notification.success("bottomLeft", res?.notification, null) 
+      }
+      else{ Notification.error("bottomLeft", res?.notification, null) }
+    })
   };
 
   return(

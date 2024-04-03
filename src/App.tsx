@@ -4,7 +4,6 @@ import { Router } from './config/Router';
 import { HomeModalContext } from './context/HomeContext';
 
 const App: React.FC = () => {
-
   return (
     <BrowserRouter>
       <Router />

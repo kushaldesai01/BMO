@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import "../../../assets/styles/Home/home.css";
 import { HomeModalContext } from '../../../context/HomeContext';
 import { Signup } from '../../modules/Auth/Signup';
 import { Login } from '../../modules/Auth/Login';
+import { checkToken } from '../../../apis/Auth';
 
 export const Home: React.FC = () => {
 
+  const navigate = useNavigate();
   const [signupModal, setSignupModal] = useState<boolean>(false);
   const [loginModal, setLoginModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    checkToken()
+    .then((res: any) => {
+      if(res?.success === true){ navigate('/dashboard') }
+    })
+  }, []);
 
   return (
     <Layout className="layout">

@@ -1,4 +1,4 @@
-import { Notification } from "../services/Notification";
+import { Notification } from "../components/Notification";
 
 export const POST = async (
   requestURL: any,
@@ -6,16 +6,15 @@ export const POST = async (
   ) => {
   try{
     let token: any = localStorage.getItem("token");
+    let headerOption: any = token ? {"Authorization": token, "Content-Type": "application/json"} : {"Content-Type": "application/json"}
     const response = await (await fetch(
       requestURL,
       {
         method: "POST",
-        headers: {"Authorization": token, "Content-Type": "application/json"},
+        headers: headerOption,
         body: JSON.stringify(body)
       }
-    )).json()
-    if(response.status == true){ Notification.success("bottomLeft", response?.message?.[0], null) }
-    else if(response.status == false){ Notification.error("bottomLeft", response?.message?.[0], null) }
+    )).json();
     return response;
   }
   catch(err: any){Notification.error("bottomLeft", err.message, null);}

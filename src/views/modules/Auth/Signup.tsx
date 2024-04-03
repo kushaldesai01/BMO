@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Form, Input, Modal } from "antd";
 import { signup } from "../../../apis/Auth";
-import { Notification } from "../../../services/Notification";
+import { Notification } from "../../../components/Notification";
 import { HomeModalContext } from "../../../context/HomeContext";
 
 export const Signup: React.FC = () => {
@@ -18,14 +18,15 @@ export const Signup: React.FC = () => {
   const [signupModal, setSignupModal] = useContext(HomeModalContext);
 
   const onFinish = (values: FieldType) => {
-    signup(values).then((res) => {
-      if (res.success) {
-        Notification.success("top", "Sign up", res.notification);
-        // navigate("/login");
-      } else {
-        Notification.error("top", "Sign up", res.notification);
+    signup(values)
+    .then((res: any) => {
+      if(res.success === true){
+        localStorage.setItem("token", res?.data);
+        navigate('/dashboard');
+        Notification.success("bottomLeft", res?.notification, null) 
       }
-    });
+      else{ Notification.error("bottomLeft", res?.notification, null) }
+    })
   };
 
   return (
